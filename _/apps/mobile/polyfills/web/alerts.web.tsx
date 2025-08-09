@@ -430,7 +430,6 @@ export const AlertModal = () => {
 };
 
 const styling = (userInterfaceStyle: string) =>
-	// @ts-expect-error - outlineStyle is for web only
 	StyleSheet.create({
 		container: {
 			flex: 1,
@@ -439,7 +438,6 @@ const styling = (userInterfaceStyle: string) =>
 			backgroundColor: 'rgba(0,0,0,0.2)',
 		},
 		content: {
-			backdropFilter: 'blur(20px)',
 			borderRadius: 12,
 			width: 244,
 		},
@@ -475,7 +473,6 @@ const styling = (userInterfaceStyle: string) =>
 			marginBottom: -8,
 			marginHorizontal: 12,
 			fontSize: 12,
-			outlineStyle: 'none',
 		},
 		textInputTop: {
 			borderTopLeftRadius: 8,
