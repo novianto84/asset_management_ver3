@@ -90,6 +90,10 @@
 		"@shopify/react-native-skia": "v2.0.0-next.4",
 		"react-native-graph": {
 			"@shopify/react-native-skia": "v2.0.0-next.4"
+		},
+		"node-fetch": "^2.6.7",
+		"@expo/browser-polyfill": {
+			"expo-file-system": "~18.1.10"
 		}
 	},
 	"private": true
