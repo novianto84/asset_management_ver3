@@ -23,15 +23,16 @@ async function findRouteFiles(dir: string): Promise<string[]> {
     try {
       const filePath = join(dir, file);
       const statResult = await stat(filePath);
+      const normalizedFilePath = filePath.replace(/\\/g, '/');
 
       if (statResult.isDirectory()) {
         routes = routes.concat(await findRouteFiles(filePath));
       } else if (file === 'route.js') {
         // Handle root route.js specially
-        if (filePath === join(__dirname, 'route.js')) {
-          routes.unshift(filePath); // Add to beginning of array
+        if (normalizedFilePath === join(__dirname, 'route.js').replace(/\\/g, '/')) {
+          routes.unshift(normalizedFilePath); // Add to beginning of array
         } else {
-          routes.push(filePath);
+          routes.push(normalizedFilePath);
         }
       }
     } catch (error) {
@@ -82,7 +83,9 @@ async function registerRoutes() {
 
   for (const routeFile of routeFiles) {
     try {
-      const route = await import(/* @vite-ignore */ `${routeFile}?update=${Date.now()}`);
+      // Ensure the path is compatible with dynamic import on Windows
+      const importPath = routeFile.startsWith('/') ? `file://${routeFile}` : routeFile;
+      const route = await import(/* @vite-ignore */ `${importPath}?update=${Date.now()}`);
 
       const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
       for (const method of methods) {
